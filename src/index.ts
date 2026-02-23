@@ -1,10 +1,22 @@
 import express, { Request, Response } from "express";
+import subjectsRouter from "./routes/subjects";
+import cors from "cors";
 
 const app = express();
 const PORT = 8000;
 
+// Cors
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+}))
+
 // Middleware
 app.use(express.json());
+
+// Subjects Route
+app.use('/api/subjects', subjectsRouter)
 
 // Root route
 app.get("/", (req: Request, res: Response) => {
